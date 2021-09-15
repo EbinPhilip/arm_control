@@ -1,0 +1,7 @@
+joints:
+  joint1:
+    type: PositionControlledJoint
+  joint2:
+    type: PositionControlledJoint
+  joint3:
+    type: PositionControlledJoint

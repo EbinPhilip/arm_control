@@ -16,18 +16,6 @@ enum class Actuator_Type : uint8_t
     g15 = 1
 };
 
-Actuator_Type getTypeFromActuatorString(const std::string &actuatorString)
-{
-    if (actuatorString == g15_actuator_string)
-    {
-        return Actuator_Type::g15;
-    }
-    else
-    {
-        return Actuator_Type::unknown_actuator;
-    }
-}
-
 struct Arm_Actuator_Properties : public Controllable_Entity
 {
     std::string actuator_name;

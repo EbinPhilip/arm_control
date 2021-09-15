@@ -1,0 +1,23 @@
+transmissions:
+  transmission_1:
+    joints:
+      - joint1
+    actuators:
+      - g15_1
+    type: transmission_interface::SimpleTransmission
+
+  transmission_2:
+    joints:
+      - joint2
+    actuators:
+      - g15_2
+    type: transmission_interface::SimpleTransmission
+  
+  transmission_3:
+    joints:
+      - joint3
+    actuators:
+      - g15_3
+    type: transmission_interface::SimpleTransmission
+
+

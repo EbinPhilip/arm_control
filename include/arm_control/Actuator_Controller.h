@@ -19,5 +19,6 @@ public:
 };
 
 typedef std::shared_ptr<Actuator_Controller> Actuator_Controller_Ptr;
+typedef std::shared_ptr< std::map<std::string, Actuator_Controller_Ptr> > Actuator_Controller_Map;
 
 #endif

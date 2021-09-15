@@ -65,6 +65,8 @@
   <depend>rosparam_shortcuts</depend>
   <depend>g15_linux</depend>
   <depend>g15_servo</depend>
+  <depend>xmlrpcpp</depend>
+  <depend>pluginlib</depend>
 
 
 

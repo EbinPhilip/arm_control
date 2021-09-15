@@ -1,0 +1,19 @@
+actuators:
+  - g15_servo:
+      g15_1:
+        servo_id: 1
+        controller_name: g15_controller
+      g15_2:
+        servo_id: 2
+        controller_name: g15_controller
+  - g15_servo:
+      g15_3:
+        servo_id: 3
+        controller_name: g15_controller
+
+actuator_controllers:
+  - g15_actuator_controller:
+      g15_controller:
+        controller_id: 1
+        port: /dev/ttyUSB0
+        baud_rate: 115200

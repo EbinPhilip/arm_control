@@ -1,8 +1,6 @@
 #include "Actuator_Control_Interface.h"
 
-Actuator_Control_Interface::Actuator_Control_Interface(std::shared_ptr<
-                                                       std::map<std::string, Actuator_Controller_Ptr>>
-                                                           controller_map)
+Actuator_Control_Interface::Actuator_Control_Interface(Actuator_Controller_Map controller_map)
     : controller_map_(controller_map)
 {
     for (auto controller : *controller_map_)
@@ -12,7 +10,7 @@ Actuator_Control_Interface::Actuator_Control_Interface(std::shared_ptr<
 
         for (auto actuator : actuator_names)
         {
-            actuator_controller_map_.insert(std::make_pair(actuator, controller.second));
+            actuator_name_controller_map_.insert(std::make_pair(actuator, controller.second));
         }
     }
 }
@@ -35,8 +33,8 @@ void Actuator_Control_Interface::writeCommand()
 
 Arm_Actuator_Properties_Ptr Actuator_Control_Interface::getActuator(const std::string &name)
 {
-    auto it = actuator_controller_map_.find(name);
-    if (it != actuator_controller_map_.end())
+    auto it = actuator_name_controller_map_.find(name);
+    if (it != actuator_name_controller_map_.end())
     {
         return it->second->getActuator(name);
     }
@@ -48,7 +46,7 @@ Arm_Actuator_Properties_Ptr Actuator_Control_Interface::getActuator(const std::s
 
 void Actuator_Control_Interface::getActuatorNames(std::vector<std::string> &names)
 {
-    for (auto it : actuator_controller_map_)
+    for (auto it : actuator_name_controller_map_)
     {
         names.push_back(it.first);
     }

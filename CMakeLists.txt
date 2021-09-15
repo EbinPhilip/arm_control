@@ -22,6 +22,8 @@ find_package(catkin REQUIRED COMPONENTS
     trajectory_msgs
     transmission_interface
     urdf
+    xmlrpcpp
+    pluginlib
     g15_servo
     g15_linux
 )
@@ -132,6 +134,8 @@ catkin_package(
     trajectory_msgs
     transmission_interface
     urdf
+    xmlrpcpp
+    pluginlib
     g15_servo
     g15_linux
 #  DEPENDS system_lib
@@ -155,6 +159,8 @@ add_library(Actuator_Control_Interface
 
 add_library(G15_Controller
   src/G15_Controller.cpp
+  src/G15_Actuator_Config_Parser.cpp
+  src/G15_Controller_Config_Parser.cpp
 )
 target_link_libraries(G15_Controller
   ${catkin_LIBRARIES}
@@ -167,6 +173,73 @@ target_link_libraries(G15_Controller_example
   ${catkin_LIBRARIES}
   G15_Controller
   Actuator_Control_Interface
+)
+
+add_library(Actuator_Controllers_Creator
+  src/Actuator_Controllers_Creator.cpp
+)
+target_link_libraries(Actuator_Controllers_Creator
+  ${catkin_LIBRARIES}
+  G15_Controller
+)
+
+add_executable(Actuator_Config_example
+  src/Actuator_Config_example.cpp
+)
+target_link_libraries(Actuator_Config_example
+  ${catkin_LIBRARIES}
+  G15_Controller
+  Actuator_Control_Interface
+  Actuator_Controllers_Creator
+)
+
+add_library(Config_Parser
+  src/Joint_Config_Parser.cpp
+  src/Joint_Properties.cpp
+  src/Transmission_Config_Parser.cpp
+  src/Transmission_Properties.cpp
+)
+target_link_libraries(Config_Parser
+  ${catkin_LIBRARIES}
+  Actuator_Control_Interface
+)
+
+add_executable(Config_Parser_example
+  src/Config_Parser_example.cpp
+)
+target_link_libraries(Config_Parser_example
+  ${catkin_LIBRARIES}
+  G15_Controller
+  Actuator_Control_Interface
+  Actuator_Controllers_Creator
+  Config_Parser
+)
+
+add_library(Arm_Robot_HW
+  src/Arm_Robot_HW.cpp
+)
+target_link_libraries(Arm_Robot_HW
+  ${catkin_LIBRARIES}
+  G15_Controller
+  Actuator_Control_Interface
+  Actuator_Controllers_Creator
+  Config_Parser
+)
+
+add_executable(robot_hw_standalone_example
+  src/robot_hw_standalone_example.cpp
+)
+target_link_libraries(robot_hw_standalone_example
+  ${catkin_LIBRARIES}
+  Arm_Robot_HW
+)
+
+add_executable(robot_hw_example
+  src/robot_hw_example.cpp
+)
+target_link_libraries(robot_hw_example
+  ${catkin_LIBRARIES}
+  Arm_Robot_HW
 )
 
 ## Add cmake target dependencies of the library

@@ -1,0 +1,8 @@
+<launch>
+    <rosparam file="$(find arm_control)/config/actuators.yaml" command="load" ns="robot_hw_standalone_example/"/>
+    <rosparam file="$(find arm_control)/config/joints.yaml" command="load" ns="robot_hw_standalone_example/"/>
+    <rosparam file="$(find arm_control)/config/transmissions.yaml" command="load" ns="robot_hw_standalone_example/"/>
+
+    <node name="robot_hw_standalone_example" pkg="arm_control" type="robot_hw_standalone_example" output="screen"/>
+
+</launch>

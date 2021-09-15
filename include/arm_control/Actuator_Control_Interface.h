@@ -23,8 +23,10 @@ public:
     virtual void getActuatorNames(std::vector<std::string>&) override;
 
 protected:
-    std::shared_ptr< std::map<std::string, Actuator_Controller_Ptr> > controller_map_;
-    std::map<std::string, Actuator_Controller_Ptr> actuator_controller_map_;
+    Actuator_Controller_Map controller_map_;
+    std::map<std::string, Actuator_Controller_Ptr> actuator_name_controller_map_;
 };
+
+typedef std::shared_ptr<Actuator_Control_Interface> Actuator_Control_Interface_Ptr;
 
 #endif

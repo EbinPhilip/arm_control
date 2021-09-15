@@ -1,6 +1,7 @@
 #include "G15_Controller.h"
 
 #include <stdexcept>
+#include <cmath>
 
 G15_Controller::G15_Controller(const std::string &controller_name, const std::string &serial_port)
     : controller_name_(controller_name),
@@ -37,12 +38,12 @@ void G15_Controller::readState()
             value = read_bytes[1] & 0x03;
             value = (value << 8) | read_bytes[0];
             servo.second->state.position =
-                servo_controller_.convertFromRegisterValue(value, POSITION_MAX_REGISTER, 360.0);
+                servo_controller_.convertFromRegisterValue(value, POSITION_MAX_REGISTER, 2*M_PI);
 
             value = read_bytes[3] & 0x01;
             value = (value << 8) | read_bytes[2];
             servo.second->state.velocity =
-                servo_controller_.convertFromRegisterValue(value, SPEED_MAX_REGISTER, SPEED_MAX_RPM);
+                servo_controller_.convertFromRegisterValue(value, SPEED_MAX_REGISTER, SPEED_MAX_RADIANS);
             
             value = read_bytes[5] & 0x01;
             value = (value << 8) | read_bytes[4];
@@ -56,8 +57,8 @@ void G15_Controller::writeCommand()
 {
     for (auto servo : servo_map_)
     {
-        uint16_t position = ConvertAngleToPos(servo.second->command.position);
-        uint16_t velocity = ConvertRPMToVal(servo.second->command.velocity);
+        uint16_t position = servo_controller_.convertToRegisterValue(servo.second->command.position, 2*M_PI, POSITION_MAX_REGISTER);
+        uint16_t velocity = servo_controller_.convertToRegisterValue(servo.second->command.velocity, SPEED_MAX_RADIANS, SPEED_MAX_REGISTER);
 
         uint8_t packet[] = 
             {

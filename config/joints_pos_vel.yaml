@@ -1,0 +1,7 @@
+joints:
+  joint1:
+    type: PosVelControlledJoint
+  joint2:
+    type: PosVelControlledJoint
+  joint3:
+    type: PosVelControlledJoint
